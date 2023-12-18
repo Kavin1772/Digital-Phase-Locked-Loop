@@ -1,0 +1,54 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 12/13/2023 05:54:06 PM
+// Design Name: 
+// Module Name: square
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module square(
+    input clk,
+    input [11:0] H_clk,
+    input rst,
+    output gen_clk,
+    output sq_wave
+    );
+      // Counter to control the frequency
+    //reg sq_wave;
+    reg gen_clk;
+    reg [32:0] decima;
+   // assign generated=gen_clk;
+    assign sq_wave = (H_clk>12'h0800) ^ gen_clk;
+    always @(posedge clk) begin
+        decima<= H_clk*250000;
+        if( decima > 12'd072500)begin
+            gen_clk<=0;
+        end
+        else begin
+            gen_clk<=1;
+        end        
+    end
+ /*         
+    always @(posedge clk) begin
+        if(rst)begin
+            sq_wave<=0;
+        end 
+        else begin    
+        sq_wave <= ~sq_wave;
+        end
+    end    */
+endmodule
